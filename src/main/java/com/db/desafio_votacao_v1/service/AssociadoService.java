@@ -2,6 +2,7 @@ package com.db.desafio_votacao_v1.service;
 
 import com.db.desafio_votacao_v1.domain.Associado;
 import com.db.desafio_votacao_v1.dto.AssociadoRecordResponse;
+import com.db.desafio_votacao_v1.exception.EntidadeNaoEncontradaException;
 import com.db.desafio_votacao_v1.repository.AssociadoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,9 @@ public class AssociadoService {
     @Transactional(readOnly = true)
     public AssociadoRecordResponse buscarAssociado(Long idAssociado) {
         var associado = associadoRepository.findById(idAssociado)
-                .orElseThrow(() -> new RuntimeException("Associado com o ID %d não encontrado!"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Associado com o ID %d não encontrado!",
+                        idAssociado
+                ));
 
         return new AssociadoRecordResponse(associado.getId(), associado.getNome());
     }

@@ -4,6 +4,7 @@ import com.db.desafio_votacao_v1.domain.Sessao;
 import com.db.desafio_votacao_v1.dto.PautaRecordResponse;
 import com.db.desafio_votacao_v1.dto.SessaoRecordRequest;
 import com.db.desafio_votacao_v1.dto.SessaoRecordResponse;
+import com.db.desafio_votacao_v1.exception.EntidadeNaoEncontradaException;
 import com.db.desafio_votacao_v1.repository.PautaRepository;
 import com.db.desafio_votacao_v1.repository.SessaoRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,8 @@ public class SessaoService {
     @Transactional
     public SessaoRecordResponse abrirSessao(SessaoRecordRequest sessaoRecordRequest) {
         var pauta = pautaRepository.findById(sessaoRecordRequest.idPauta())
-                .orElseThrow(() -> new RuntimeException("Pauta com o ID %d não encontrada!"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Pauta com o ID %d não encontrada!"
+                        , sessaoRecordRequest.idPauta()));
 
         int minutos = (sessaoRecordRequest.duracaoMinutos() != null && sessaoRecordRequest.duracaoMinutos() > 0)
                 ? sessaoRecordRequest.duracaoMinutos() : 1;
@@ -40,7 +42,8 @@ public class SessaoService {
     @Transactional(readOnly=true)
     public SessaoRecordResponse buscarSessao(Long idSessao) {
         var sessao = sessaoRepository.findById(idSessao)
-                .orElseThrow(() -> new RuntimeException("Sessão com o ID %d não encontrado!"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Sessão com o ID %d não encontrado!"
+                        , idSessao));
 
         var pautaResponse = new PautaRecordResponse(sessao.getId(), sessao.getPauta().getConteudo());
 

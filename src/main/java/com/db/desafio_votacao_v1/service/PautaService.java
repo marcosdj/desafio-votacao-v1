@@ -5,6 +5,7 @@ import com.db.desafio_votacao_v1.dto.PautaRecordRequest;
 import com.db.desafio_votacao_v1.dto.PautaRecordResponse;
 import com.db.desafio_votacao_v1.dto.ResultadoVotacaoRecordResponse;
 import com.db.desafio_votacao_v1.enums.VotoEnum;
+import com.db.desafio_votacao_v1.exception.EntidadeNaoEncontradaException;
 import com.db.desafio_votacao_v1.repository.PautaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -21,7 +22,7 @@ public class PautaService {
     @Transactional(readOnly = true)
     public Pauta buscarPauta(Long idPauta) {
         return pautaRepository.findById(idPauta)
-                .orElseThrow(() -> new RuntimeException("Pauta com o ID %d não encontrada!"));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Pauta com o ID %d não encontrada!", idPauta));
     }
 
     public PautaRecordResponse buscarPautaResponse(Long idPauta) {
