@@ -27,7 +27,6 @@ public class Sessao implements Serializable {
 
     public Sessao(Pauta pauta) {
         this.pauta = pauta;
-        this.dataFim = LocalDateTime.now();
     }
 
     public boolean estaAberta() {
