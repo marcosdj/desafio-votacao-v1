@@ -29,6 +29,14 @@ public class Voto implements Serializable {
     @Column(name = "voto", nullable = false)
     private VotoEnum voto;
 
+    public Voto() {}
+
+    public Voto(Associado associado, String voto, Pauta pauta) {
+        this.associado = associado;
+        this.voto = VotoEnum.toEnum(voto);
+        this.pauta = pauta;
+    }
+
     public Long getId() {
         return id;
     }
