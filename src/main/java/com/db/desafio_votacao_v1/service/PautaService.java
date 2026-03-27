@@ -7,7 +7,6 @@ import com.db.desafio_votacao_v1.dto.ResultadoVotacaoRecordResponse;
 import com.db.desafio_votacao_v1.enums.VotoEnum;
 import com.db.desafio_votacao_v1.exception.EntidadeNaoEncontradaException;
 import com.db.desafio_votacao_v1.repository.PautaRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,9 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 
 @Service
-@RequiredArgsConstructor
 public class PautaService {
     private final PautaRepository pautaRepository;
+
+    public PautaService(PautaRepository pautaRepository) {
+        this.pautaRepository = pautaRepository;
+    }
 
     @Transactional(readOnly = true)
     public Pauta buscarPauta(Long idPauta) {

@@ -7,17 +7,20 @@ import com.db.desafio_votacao_v1.dto.SessaoRecordResponse;
 import com.db.desafio_votacao_v1.exception.EntidadeNaoEncontradaException;
 import com.db.desafio_votacao_v1.repository.PautaRepository;
 import com.db.desafio_votacao_v1.repository.SessaoRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 @Service
-@RequiredArgsConstructor
 public class SessaoService {
     private final SessaoRepository sessaoRepository;
     private final PautaRepository pautaRepository;
+
+    public SessaoService(SessaoRepository sessaoRepository, PautaRepository pautaRepository) {
+        this.sessaoRepository = sessaoRepository;
+        this.pautaRepository = pautaRepository;
+    }
 
     @Transactional
     public SessaoRecordResponse abrirSessao(SessaoRecordRequest sessaoRecordRequest) {

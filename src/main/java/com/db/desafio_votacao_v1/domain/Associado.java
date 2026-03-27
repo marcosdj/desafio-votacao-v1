@@ -11,7 +11,6 @@ public class Associado implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idAssociado")
     private Long id;
 
     @Column(name = "nome")
