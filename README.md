@@ -1,75 +1,102 @@
-🗳️ Sistema de Votação em Assembleia - API REST
+🗳️ Sistema de Votação V1 - API REST
+Esta é uma solução profissional para o gerenciamento de sessões de votação em assembleias. A API permite a criação de pautas, abertura de sessões com tempo controlado e registro de votos, garantindo a integridade dos dados e regras de negócio robustas.
 
-Este projeto é uma solução robusta para gerenciamento de pautas e sessões de votação em assembleias. A aplicação permite cadastrar pautas, abrir sessões de votação com tempo determinado e registrar votos únicos de associados, garantindo a integridade e transparência do processo.
+🚀 Tecnologias e Versões
 
-🛠️ Tecnologias Utilizadas
+Java 21
 
-Java 21: Utilização de Records para DTOs imutáveis.
-Spring Boot 3.3.0: Framework base para construção da API REST.
-Spring Data JPA: Abstração de persistência com Hibernate.
-PostgreSQL: Banco de dados relacional para persistência dos dados.
-Docker & Docker Compose: Orquestração do ambiente de banco de dados.
-JUnit 5 & Mockito: Testes unitários para garantir a qualidade das regras de negócio.
-Maven: Gerenciamento de dependências e build.
+Spring Boot 3.3.0 (Framework para construção da API REST.)
 
-🏗️ Arquitetura e Boas Práticas
+Spring Data JPA (Persistência dos dados com Hibernate)
 
-O projeto foi construído seguindo princípios de Clean Code e padrões de projeto modernos:
+Spring Validation (Bean Validation)
 
-Injeção de Dependência por Construtor: Garante a imutabilidade dos Services e facilita testes unitários.
-Records (Java 21): Utilizados como DTOs para garantir que os dados trafegados na API sejam imutáveis e livres de efeitos colaterais.
-Global Exception Handling: Centralização do tratamento de erros através de um @RestControllerAdvice, retornando mensagens claras e códigos HTTP semânticos.
-Camada de Serviço Isolada: Toda a lógica de negócio reside nos Services, mantendo os Controllers (Resources) "magros" e focados apenas no protocolo HTTP.
+PostgreSQL (Banco de dados de produção)
 
-🚀 Como Executar a Aplicação
+H2 Database (Banco em memória para testes)
 
-Pré-requisitos
+JUnit 5 & Mockito (Cobertura de testes unitários)
 
-JDK 21 instalado.
-Docker e Docker Compose instalados.
-Maven 3.9+.
+Maven 3.8+
 
-Passo 1: Subir o Banco de Dados
+🏗️ Arquitetura e Padrões
 
-Na raiz do projeto, execute o comando para iniciar o container do PostgreSQL:
+O projeto foi desenvolvido seguindo as melhores práticas de Clean Code e SOLID:
 
-Criar o banco chamado votacaov1 no Postgres
+Injeção de Dependência por Construtor: Maior testabilidade e imutabilidade.
 
-Passo 2: Configurar o Perfil
+Global Exception Handler: Padronização de erros em JSON para todos os endpoints.
 
-Certifique-se de que o arquivo src/main/resources/application.properties está apontando para o banco local (localhost:5432).
+DTOs com Records: Garantia de imutabilidade no tráfego de dados.
 
-Passo 3: Executar a Aplicação
+Soft Validation: Regras de negócio validadas antes da persistência.
 
+⚙️ Configuração de Ambiente
+
+Para rodar o projeto localmente ou em deploy (Railway/Render), utilize as seguintes variáveis de ambiente:
+
+PGHOST: Endereço do host do banco de dados.
+
+PGPORT: Porta de conexão (Padrão 5432).
+
+PGUSER: Usuário do banco.
+
+PGPASSWORD: Senha do banco.
+
+PORT: Porta onde a aplicação subirá (Padrão 8080).
+
+🛠️ Como Executar
+
+2. Clonar o Repositório
+   Bash
+
+git clone https://github.com/seu-usuario/votacaov1.git
+cd votacaov1
+
+3. Subir o Banco de Dados (Docker)
+   Bash
+
+docker-compose up -d
+3. Compilar e Rodar a Aplicação
+   Bash
+
+mvn clean install
 mvn spring-boot:run
 
-Passo 4: Executar os Testes
+📖 Endpoints da API
 
-Para garantir que tudo está funcionando conforme o esperado:
+Pautas
+
+POST /api/v1/pautas: Cria uma nova pauta para votação.
+
+GET /api/v1/pautas/{id}/resultado: Exibe o placar final dos votos.
+
+Sessões
+
+POST /api/v1/sessoes/abrir: Abre uma pauta para votação.
+
+Regra: Se não informar duracaoMinutos, o padrão será 1 minuto.
+
+GET /api/v1/sessoes/{id}: Consulta o status de uma sessão específica.
+
+Votos
+
+POST /api/v1/votos: Registra o voto de um associado.
+
+Regra 1: Um associado não pode votar duas vezes na mesma pauta.
+
+Regra 2: Votos só são aceitos se a sessão ainda estiver aberta.
+
+🧪 Executando Testes
+
+Para garantir que todas as regras de negócio estão funcionando, execute:
+
+Bash
 
 mvn test
 
-📖 Documentação dos Endpoints (API)
-1.
-2. Pautas
-   POST /api/v1/pauta: Cadastra uma nova pauta.
-   GET /api/v1/pauta/{id}/resultado: Retorna o fechamento da votação (Sim, Não e Status).
+Nota sobre os Testes: Os testes utilizam o perfil test com banco H2 em memória, não afetando os dados do seu banco PostgreSQL local.
 
-2. Sessões
-   POST /api/v1/sessao/abrir: Abre uma pauta para votação.
+🔗 Link de Acesso Online
 
-   Regra: Se o campo duracaoMinutos não for enviado, a sessão fecha automaticamente em 1 minuto.
-
-3. Votos
-   POST /api/v1/voto: Registra o voto de um associado.
-
-   Regra: Um associado só pode votar uma vez por pauta.
-   O sistema impede votos em sessões já encerradas.
-
-📝 Decisões de Projeto
-
-Validação de Voto Único: Implementada tanto na camada de serviço (via votoRepository.associadoJaVotou) quanto no banco de dados através de uma Unique Constraint (associado + pauta), garantindo segurança em cenários de alta concorrência.
-Tratamento de Datas: Utilização de LocalDateTime para garantir precisão no fechamento das sessões.
-Relacionamentos: Mapeamentos @OneToOne e @ManyToOne configurados com FetchType.LAZY para otimizar o carregamento de dados e evitar o problema de N+1 consultas.
-
-Nota: Este projeto foi desenvolvido visando performance e manutenibilidade, pronto para execução em ambientes de nuvem (Cloud).
+A aplicação está disponível para testes através do link: https://votacaov1-production.up.railway.app
