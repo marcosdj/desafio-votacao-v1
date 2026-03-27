@@ -8,17 +8,22 @@ import com.db.desafio_votacao_v1.repository.AssociadoRepository;
 import com.db.desafio_votacao_v1.repository.PautaRepository;
 import com.db.desafio_votacao_v1.repository.SessaoRepository;
 import com.db.desafio_votacao_v1.repository.VotoRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 public class VotoService {
     private final VotoRepository votoRepository;
     private final AssociadoRepository associadoRepository;
     private final PautaRepository pautaRepository;
     private final SessaoRepository sessaoRepository;
+
+    public VotoService(VotoRepository votoRepository, AssociadoRepository associadoRepository, PautaRepository pautaRepository, SessaoRepository sessaoRepository) {
+        this.votoRepository = votoRepository;
+        this.associadoRepository = associadoRepository;
+        this.pautaRepository = pautaRepository;
+        this.sessaoRepository = sessaoRepository;
+    }
 
     @Transactional
     public void votar(VotoRecordRequest votoRecordRequest) {

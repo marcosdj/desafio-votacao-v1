@@ -12,14 +12,12 @@ public class Pauta implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idPauta")
     private Long id;
 
     @Column(name = "conteudo")
     private String conteudo;
 
     @OneToMany(mappedBy = "pauta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Column(name = "votos")
     private List<Voto> votos;
 
     public Pauta() {}

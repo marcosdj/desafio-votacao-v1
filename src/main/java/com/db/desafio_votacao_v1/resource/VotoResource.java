@@ -2,7 +2,6 @@ package com.db.desafio_votacao_v1.resource;
 
 import com.db.desafio_votacao_v1.dto.VotoRecordRequest;
 import com.db.desafio_votacao_v1.service.VotoService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,9 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("voto")
-@RequiredArgsConstructor
 public class VotoResource {
     private final VotoService votoService;
+
+    public VotoResource(VotoService votoService) {
+        this.votoService = votoService;
+    }
 
     @PostMapping
     public ResponseEntity votar(@RequestBody VotoRecordRequest votoRecordRequest) {

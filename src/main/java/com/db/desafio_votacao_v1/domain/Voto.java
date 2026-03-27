@@ -12,17 +12,14 @@ public class Voto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idVoto")
     private Long id;
 
     @OneToOne
     @JoinColumn(name = "associado_id")
-    @Column(name = "associado")
     private Associado associado;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pauta_id", nullable = false)
-    @Column(name = "pauta")
     private Pauta pauta;
 
     @Enumerated(EnumType.STRING)

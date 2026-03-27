@@ -12,12 +12,10 @@ public class Sessao implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idSessao")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sessao_id", referencedColumnName = "id", nullable = false)
-    @Column(name = "pauta")
+    @JoinColumn(name = "pauta_id", referencedColumnName = "id", nullable = false)
     private Pauta pauta;
 
     @Column(name = "dataFim", nullable = false)
