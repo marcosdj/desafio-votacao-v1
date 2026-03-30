@@ -31,20 +31,6 @@ DTOs com Records: Garantia de imutabilidade no tráfego de dados.
 
 Soft Validation: Regras de negócio validadas antes da persistência.
 
-⚙️ Configuração de Ambiente
-
-Para rodar o projeto localmente ou em deploy (Railway/Render), utilize as seguintes variáveis de ambiente:
-
-PGHOST: Endereço do host do banco de dados.
-
-PGPORT: Porta de conexão (Padrão 5432).
-
-PGUSER: Usuário do banco.
-
-PGPASSWORD: Senha do banco.
-
-PORT: Porta onde a aplicação subirá (Padrão 8080).
-
 🛠️ Como Executar
 
 2. Clonar o Repositório
@@ -53,10 +39,10 @@ PORT: Porta onde a aplicação subirá (Padrão 8080).
 git clone https://github.com/seu-usuario/votacaov1.git
 cd votacaov1
 
-3. Subir o Banco de Dados (Docker)
+3. Subir o Banco de Dados
    Bash
 
-docker-compose up -d
+Com o Postgres instalado, criar um banco nomeado votacaov1
 3. Compilar e Rodar a Aplicação
    Bash
 
