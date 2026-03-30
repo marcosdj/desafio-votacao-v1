@@ -14,8 +14,8 @@ public class Voto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "associado_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "associado_id", nullable = false)
     private Associado associado;
 
     @ManyToOne(fetch = FetchType.LAZY)
