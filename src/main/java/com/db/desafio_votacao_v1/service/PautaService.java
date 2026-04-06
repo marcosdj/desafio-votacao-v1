@@ -48,8 +48,8 @@ public class PautaService {
         var pauta = this.buscarPauta(idPauta);
         var votos = pauta.getVotos();
 
-        long totalVotosSim = votos.stream().filter(v -> v.getVoto() == VotoEnum.S).count();
-        long totalVotosNao = votos.stream().filter(v -> v.getVoto() == VotoEnum.N).count();
+        long totalVotosSim = votos.stream().filter(voto -> voto.getVoto() == VotoEnum.S).count();
+        long totalVotosNao = votos.stream().filter(voto -> voto.getVoto() == VotoEnum.N).count();
 
         String status = totalVotosSim > totalVotosNao ? "APROVADA" : (totalVotosNao > totalVotosSim ? "REPROVADA" : "EMPATE");
 
