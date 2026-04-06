@@ -20,9 +20,9 @@ public enum VotoEnum {
         if (Objects.isNull(descricao))
             return null;
 
-        for (VotoEnum x : VotoEnum.values()) {
-            if (descricao.equals(x.getDescricao()))
-                return x;
+        for (VotoEnum votoEnum : VotoEnum.values()) {
+            if (descricao.equals(votoEnum.getDescricao()))
+                return votoEnum;
         }
 
         throw new IllegalArgumentException("Invalid code: " + descricao);
